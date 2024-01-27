@@ -27,7 +27,7 @@ To use the stored procedure, execute it with the required parameters. For exampl
 ```sql
 EXECUTE sp_CheckCategoryAndAddProduct 
     @categoryName = 'TestCategory2', 
-    @description = 'hdshhdj2', 
+    @description = 'TestDescription2', 
     @productName = 'TestProduct3',
     @unitPrice = 4,
     @unitsInStock = 4
