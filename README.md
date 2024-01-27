@@ -115,3 +115,36 @@ EXECUTE sp_CheckAndAddLocation
     @town = 'Shibuya', 
     @district = 'Harajuku'
 ```
+# BirthDate Confirmation
+
+## Scalar Function: `ConfirmBirthDate`
+
+This script defines a scalar function named `ConfirmBirthDate` to check the completeness and correctness of a given date of birth (`@birthDate`) based on the provided age (`@age`). The function returns a descriptive message about the completeness of the provided date.
+
+### Function Parameters
+- `@birthDate` (DATE): The date of birth to be checked.
+- `@age` (INT): The age associated with the date of birth.
+
+### Function Logic
+The function checks the completeness and correctness of the provided date of birth in different scenarios:
+1. If the date of birth is incomplete or entered incorrectly (NULL or invalid date format).
+2. If only the year is given.
+3. If the year and month are given, but no day is given.
+4. If the date of birth is completely filled in.
+
+### Return Value
+The function returns a VARCHAR(100) message describing the completeness of the provided date of birth.
+
+### Usage
+To use the function, declare variables for `@birthDate`, `@age`, and `@result`, set the values, and then call the function. For example:
+
+```sql
+DECLARE @result VARCHAR(100);
+DECLARE @birthDate DATE;
+DECLARE @age INT;
+
+SET @age = 21;
+SET @birthDate = '2003-01-01'; 
+SET @result = dbo.ConfirmBirthDate(@birthDate, @age);
+SELECT @result AS Result;
+```
