@@ -32,3 +32,28 @@ EXECUTE sp_CheckCategoryAndAddProduct
     @unitPrice = 4,
     @unitsInStock = 4
 
+# Checking and Adding Category
+---
+## Stored Procedure: `sp_CheckAndAddCategory`
+
+### Purpose
+This stored procedure (`sp_CheckAndAddCategory`) is designed to check if a specified category exists in the Northwind database. If the category does not exist, it is added to the `Categories` table.
+
+### Parameters
+- `@category` (NVARCHAR(15)): The name of the category to be checked and added.
+
+### Procedure Logic
+1. **Check Category Existence**: The procedure checks if the specified category (`@category`) already exists in the `Categories` table.
+2. **Add Category if Not Exist**: If the category does not exist, it is added to the `Categories` table with the provided name.
+3. **Print Message on Existence**: If the category already exists, a message is printed indicating that the category is already in the database.
+
+### Error Handling
+- The procedure includes a `TRY...CATCH` block to capture and handle any errors that may occur during execution.
+- In case of an error, a message is printed indicating the nature of the error using `ERROR_MESSAGE()`.
+
+### Usage
+To use the stored procedure, execute it with the required parameters. For example:
+
+```sql
+EXECUTE sp_CheckAndAddCategory @category = 'Test'
+
