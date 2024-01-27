@@ -56,4 +56,62 @@ To use the stored procedure, execute it with the required parameters. For exampl
 
 ```sql
 EXECUTE sp_CheckAndAddCategory @category = 'Test'
+```
+# Checking Location (Country, City, Town, District)
+---
+## Database Schema: `Location`
 
+This script creates a database schema named `Location` with tables `Country`, `City`, `Town`, and `District` to represent a hierarchical location structure. The provided stored procedure `sp_CheckAndAddLocation` is designed to check and add entries for countries, cities, towns, and districts within the database, ensuring data integrity.
+
+### Tables
+
+1. **Country Table:**
+   - `Id` (INT): Primary key, auto-incremented.
+   - `CountryName` (VARCHAR(50)): Name of the country.
+
+2. **City Table:**
+   - `Id` (INT): Primary key, auto-incremented.
+   - `CityName` (VARCHAR(50)): Name of the city.
+   - `CountryId` (INT): Foreign key referencing the `Country` table.
+
+3. **Town Table:**
+   - `Id` (INT): Primary key, auto-incremented.
+   - `TownName` (VARCHAR(50)): Name of the town.
+   - `CityId` (INT): Foreign key referencing the `City` table.
+
+4. **District Table:**
+   - `Id` (INT): Primary key, auto-incremented.
+   - `DistrictName` (VARCHAR(50)): Name of the district.
+   - `TownId` (INT): Foreign key referencing the `Town` table.
+
+### Stored Procedure: `sp_CheckAndAddLocation`
+
+#### Purpose
+The stored procedure `sp_CheckAndAddLocation` checks if a country, city, town, and district already exist in the database. If they do not exist, the stored procedure adds them, ensuring data consistency and referential integrity.
+
+#### Parameters
+- `@country` (VARCHAR(50)): Name of the country.
+- `@city` (VARCHAR(50)): Name of the city.
+- `@town` (VARCHAR(50)): Name of the town.
+- `@district` (VARCHAR(50)): Name of the district.
+
+#### Procedure Logic
+1. **Check Country Existence**: If the specified country does not exist, it is added to the `Country` table.
+2. **Check City Existence**: If the specified city does not exist in the specified country, it is added to the `City` table.
+3. **Check Town Existence**: If the specified town does not exist in the specified city, it is added to the `Town` table.
+4. **Check District Existence**: If the specified district does not exist in the specified town, it is added to the `District` table.
+
+#### Error Handling
+- The procedure includes a `TRY...CATCH` block to capture and handle any errors that may occur during execution.
+- In case of an error, a message is printed indicating the nature of the error using `ERROR_MESSAGE()`.
+
+#### Usage
+To use the stored procedure, execute it with the required parameters. For example:
+
+```sql
+EXECUTE sp_CheckAndAddLocation 
+    @country = 'Japan', 
+    @city = 'Tokyo', 
+    @town = 'Shibuya', 
+    @district = 'Harajuku'
+```
