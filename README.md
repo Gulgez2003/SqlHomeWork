@@ -31,7 +31,7 @@ EXECUTE sp_CheckCategoryAndAddProduct
     @productName = 'TestProduct3',
     @unitPrice = 4,
     @unitsInStock = 4
-
+```
 # Checking and Adding Category
 ---
 ## Stored Procedure: `sp_CheckAndAddCategory`
