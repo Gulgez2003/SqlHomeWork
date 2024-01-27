@@ -116,7 +116,7 @@ EXECUTE sp_CheckAndAddLocation
     @district = 'Harajuku'
 ```
 # BirthDate Confirmation
-
+---
 ## Scalar Function: `ConfirmBirthDate`
 
 This script defines a scalar function named `ConfirmBirthDate` to check the completeness and correctness of a given date of birth (`@birthDate`) based on the provided age (`@age`). The function returns a descriptive message about the completeness of the provided date.
@@ -147,4 +147,36 @@ SET @age = 21;
 SET @birthDate = '2003-01-01'; 
 SET @result = dbo.ConfirmBirthDate(@birthDate, @age);
 SELECT @result AS Result;
+```
+# Trigger
+---
+## Trigger: `CUD_Trigger`
+
+This script defines a trigger named `CUD_Trigger` on the `Shippers` table in the `Northwind` database. The trigger is fired after INSERT, DELETE, or UPDATE operations on the `Shippers` table.
+
+### Trigger Logic
+The trigger checks the type of operation (INSERT, DELETE, or UPDATE) and prints a message based on the type of change performed:
+
+1. **Insert Operation:**
+   - If new records are inserted (`AFTER INSERT`), it prints 'Kayit Ekleme Islemi Yapildi.'
+
+2. **Delete Operation:**
+   - If records are deleted (`AFTER DELETE`), it prints 'Silme Islemi Yapildi.'
+
+3. **Update Operation:**
+   - If records are updated (`AFTER UPDATE`), it checks if there are differences in the `CompanyName` or `Phone` columns between the inserted and deleted data.
+   - If differences exist, it prints 'Guncelleme Islemi Yapildi.'
+
+### Usage
+To test the trigger, execute the provided `INSERT`, `UPDATE`, and `DELETE` statements on the `Shippers` table:
+
+```sql
+-- Insert operation
+INSERT INTO Shippers(CompanyName, Phone) VALUES('COMP', 'DESC');
+
+-- Update operation
+UPDATE Shippers SET CompanyName = 'Test3' WHERE ShipperID = 1;
+
+-- Delete operation
+DELETE FROM Shippers WHERE ShipperID = 4;
 ```
